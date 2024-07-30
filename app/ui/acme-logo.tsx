@@ -8,7 +8,7 @@ export default function AcmeLogo() {
       className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
     >
       {/* <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" /> */}
-      <Image src="/interlplug_logo.png" className="h-full w-full" alt="logo" width={100} height={100}/>
+      <Image src="/interlplug_logo.png" className="h-full w-full" alt="logo" width={100} height={70}/>
       {/* <p className="text-[44px]"> INTERPLUG</p> */}
     </div>
   );

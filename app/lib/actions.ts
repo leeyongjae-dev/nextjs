@@ -78,3 +78,72 @@ export async function deleteInvoice(id: string) {
   } 
   revalidatePath('/dashboard/invoices');
 }
+
+const FormCusSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  imageurl: z.string(),
+});
+ 
+const CreateCustomer = FormCusSchema.omit({ id: true });
+const UpdateCustomer = FormCusSchema.omit({ id: true });
+
+/* customer 등록 */
+export async function createCustomer(formData: FormData) {
+
+  const { name, email, imageurl } = CreateCustomer.parse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    imageurl: formData.get('imageurl'),
+  });
+
+  try {
+    await sql`
+      INSERT INTO customers (name, email, image_url)
+      VALUES (${name}, ${email}, ${imageurl})
+    `;
+  } catch(error) {
+    return {
+      message : 'Database Error: Failed to Create Customer.'
+    }
+}
+revalidatePath('/dashboard/customers');
+redirect('/dashboard/customers');
+}
+
+/* customer 수정 */
+export async function updateCustomer(id: string, formData: FormData) {
+  const { name, email, imageurl } = UpdateCustomer.parse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    imageurl: formData.get('imageurl'),
+  });
+
+  try {
+    await sql`
+      UPDATE customers
+      SET  name = ${name}, email = ${email}, image_url = ${imageurl}
+      WHERE id = ${id}
+    `;
+  } catch(error) {
+    return {
+      message : 'Database Error: Failed to Update Customer.'
+    }
+  }
+  revalidatePath('/dashboard/customers');
+  redirect(`/dashboard/customers`);
+}
+
+/* customer 삭제 */
+export async function deleteCustomer(id: string) {
+
+try {
+  await sql`DELETE FROM customesrs WHERE id = ${id}`;
+} catch(error) {
+  return {
+    message : 'Database Error: Failed to Delete Customer.'
+  } 
+} 
+revalidatePath('/dashboard/customesrs');
+}

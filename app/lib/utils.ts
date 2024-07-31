@@ -67,3 +67,25 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const generateBlockPagination = (currentPage: number, totalPages: number, pageBlock: number) => {
+  
+  const currentBlock = Math.ceil(currentPage / pageBlock);
+  
+
+  let startPage = (currentBlock - 1) * pageBlock + 1;
+  let endPage = startPage + pageBlock - 1;
+
+  if(endPage > totalPages) {
+    endPage = totalPages;
+  }
+
+  let pageArr = [];
+
+  for(let i=startPage; i<=endPage; i++) {
+    pageArr.push(i);
+  }
+
+  return pageArr;
+
+};

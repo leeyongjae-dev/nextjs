@@ -49,6 +49,7 @@ export default function Page() {
           {/* DashBoard In */}
           {urlLink.map((data) => (
             <Link
+              key={data.name}
               href={data.url}
               className="flex items-center gap-5 self-start rounded-lg px-6 py-3 text-sm font-medium transition-colors hover:bg-gray-200 md:text-base"
               style={{width:"100%"}}

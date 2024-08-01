@@ -8,11 +8,14 @@ import {
 import { CreateCustomer } from '@/app/ui/customers/buttons';
 import Link from 'next/link';
 
+import Favorite from './favorite';
+
 export default async function CustomersTable({
   customers,
 }: {
   customers: FormattedCustomersTable[];
 }) {
+
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
@@ -103,6 +106,7 @@ export default async function CustomersTable({
                           <Link href={`/dashboard/customers/${customer.id}/edit`}>
                             <p><strong>{customer.name}</strong></p>
                           </Link>
+                          <Favorite id={customer.id}/>
                         </div>
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">

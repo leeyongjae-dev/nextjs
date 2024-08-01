@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState } from 'react';
 import { CustomerForm } from '@/app/lib/definitions';
 import {
   UserCircleIcon,
@@ -9,12 +10,18 @@ import { Button } from '@/app/ui/button';
 import { UpdateCustomer } from './buttons';
 import { updateCustomer } from '@/app/lib/actions';
 
+import dynamic from 'next/dynamic';
+
+// CKEditor를 클라이언트 사이드에서만 로드하도록 설정
+const CKEditorComponent = dynamic(() => import('components/ckeditor'), { ssr: false });
+
 export default function EditCustomerForm({
   customer,
 }: {
   customer: CustomerForm;
 }) {
   const updateCustomerWithId = updateCustomer.bind(null, customer.id);
+  const [editorData, setEditorData] = useState('<p>Initial content</p>');
 
   const imgUrl = [
     {
@@ -116,6 +123,16 @@ export default function EditCustomerForm({
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
         </div>
+
+        {/* Editor */}
+        <div className="mb-4">
+          <CKEditorComponent editorData={editorData} setEditorData={setEditorData} />
+        </div>
+        {/* Editor Content */}
+        <div className="mb-4">
+          <div dangerouslySetInnerHTML={{ __html: editorData }} />
+        </div>
+        
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link

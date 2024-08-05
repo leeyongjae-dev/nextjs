@@ -5,15 +5,16 @@ import {
   CustomersTableType,
   FormattedCustomersTable,
 } from '@/app/lib/definitions';
-import { CreateCustomer } from '@/app/ui/customers/buttons';
-import Link from 'next/link';
 
+import Link from 'next/link';
 import Favorite from './favorite';
 
 export default async function CustomersTable({
   customers,
+  totalPages
 }: {
-  customers: FormattedCustomersTable[];
+  customers: FormattedCustomersTable[],
+  totalPages: number;
 }) {
 
   return (
@@ -21,10 +22,9 @@ export default async function CustomersTable({
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
         Customers
       </h1>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <Search placeholder="Search customers..." />
-        <CreateCustomer />
-      </div>
+      
+      <Search placeholder="Search customers..." totalPages={totalPages} page="customers"/>
+      
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">

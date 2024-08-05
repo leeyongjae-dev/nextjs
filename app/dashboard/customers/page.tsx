@@ -13,21 +13,24 @@ export default async function Page({
     searchParams?: {
       query?: string;
       page?: string;
+      per?: string;
     };
   }) {
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
+    const pagePer = [1, 10, 20, 50].includes(Number(searchParams?.per)) ? Number(searchParams?.per) : 10;
+
     const totalPages = await fetchCustomersPages(query);
-    const customers = await fetchFilteredCustomers(query, currentPage);
+    const customers = await fetchFilteredCustomers(query, currentPage, pagePer);
     const pageBlock = 3;
 
   return (
     <div className="w-full">
       <Suspense key={query + currentPage} fallback={<CustomersTableSkeleton/>}>
-        <Table customers={customers}/>
+        <Table customers={customers} totalPages={totalPages}/>
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-          <Pagination totalPages={totalPages} pageBlock={pageBlock}/>
+        <Pagination totalPageCount={totalPages} pageBlock={pageBlock}/>
       </div>
     </div>
   );

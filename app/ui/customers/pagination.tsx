@@ -8,21 +8,30 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { generateBlockPagination } from '@/app/lib/utils';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { string } from 'zod';
 
-export default function Pagination({ totalPages, pageBlock }: { totalPages: number, pageBlock: number }) {
+export default function Pagination(
+{ 
+    totalPageCount
+  , pageBlock = 3 
+}
+: {
+    totalPageCount: number
+  , pageBlock: number
+}) {
   // NOTE: Uncomment this code in Chapter 11
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
+  const params = new URLSearchParams(searchParams);
+
+  const pagePerItem = [1, 10, 20, 50].includes(Number(params.get('per'))) ? Number(params.get('per')) : 10;
+  const totalPages = Math.ceil(Number(totalPageCount) / pagePerItem);
+
   const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
-
 
   const allPages = generateBlockPagination(currentPage, totalPages, pageBlock);
   

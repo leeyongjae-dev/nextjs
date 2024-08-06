@@ -1,30 +1,33 @@
-import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
+import Image from "next/image";
+import { lusitana } from "@/app/ui/fonts";
+import Search from "@/app/ui/search";
 import {
   CustomersTableType,
   FormattedCustomersTable,
-} from '@/app/lib/definitions';
+} from "@/app/lib/definitions";
 
-import Link from 'next/link';
-import Favorite from './favorite';
+import Link from "next/link";
+import Favorite from "./favorite";
 
 export default async function CustomersTable({
   customers,
-  totalPages
+  totalPages,
 }: {
-  customers: FormattedCustomersTable[],
+  customers: FormattedCustomersTable[];
   totalPages: number;
 }) {
-
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
         Customers
       </h1>
-      
-      <Search placeholder="Search customers..." totalPages={totalPages} page="customers"/>
-      
+
+      <Search
+        placeholder="Search customers..."
+        totalPages={totalPages}
+        page="customers"
+      />
+
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
@@ -103,10 +106,14 @@ export default async function CustomersTable({
                             width={28}
                             height={28}
                           />
-                          <Link href={`/dashboard/customers/${customer.id}/edit`}>
-                            <p><strong>{customer.name}</strong></p>
+                          <Link
+                            href={`/dashboard/customers/${customer.id}/edit`}
+                          >
+                            <p>
+                              <strong>{customer.name}</strong>
+                            </p>
                           </Link>
-                          <Favorite id={customer.id}/>
+                          <Favorite id={customer.id} />
                         </div>
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">

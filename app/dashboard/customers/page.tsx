@@ -1,8 +1,8 @@
+import { fetchCustomersPages, fetchFilteredCustomers } from "@/app/lib/data";
 import Pagination from "@/app/ui/customers/pagination";
 import Table from "@/app/ui/customers/table";
 import { CustomersTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
-import { fetchCustomersPages, fetchFilteredCustomers } from "@/app/lib/data";
 
 export default async function Page({
   searchParams,

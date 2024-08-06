@@ -1,10 +1,7 @@
-import Image from "next/image";
+import { FormattedCustomersTable } from "@/app/lib/definitions";
 import { lusitana } from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
-import {
-  CustomersTableType,
-  FormattedCustomersTable,
-} from "@/app/lib/definitions";
+import Image from "next/image";
 
 import Link from "next/link";
 import Favorite from "./favorite";

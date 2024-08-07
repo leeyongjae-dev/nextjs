@@ -6,6 +6,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
+import { useState } from "react";
+
 export default function Search({
   placeholder,
   totalPages,
@@ -21,6 +23,7 @@ export default function Search({
 
   const text = searchParams.get("query");
   const per = searchParams.get("per");
+  const [selectValue, setSelectValue] = useState(per ? per : 10);
 
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
@@ -35,6 +38,7 @@ export default function Search({
 
   const handlePagePerSet = (per: string) => {
     const params = new URLSearchParams(searchParams);
+    params.set("page", "1");
     params.set("per", per);
     replace(`${pathname}?${params.toString()}`);
   };
@@ -59,23 +63,16 @@ export default function Search({
         {page === "invoice" ? <CreateInvoice /> : <CreateCustomer />}
         {page !== "invoice" && (
           <select
-            defaultValue={10}
+            value={selectValue}
             onChange={(e) => {
+              setSelectValue(Number(e.target.value));
               handlePagePerSet(e.target.value);
             }}
           >
-            <option value={1} selected={Number(per) === 1}>
-              1
-            </option>
-            <option value={10} selected={Number(per) === 10}>
-              10
-            </option>
-            <option value={20} selected={Number(per) === 20}>
-              20
-            </option>
-            <option value={50} selected={Number(per) === 50}>
-              50
-            </option>
+            <option value={1}>1</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
           </select>
         )}
       </div>

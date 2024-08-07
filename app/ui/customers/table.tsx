@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 import Favorite from "./favorite";
+import Modal from "./modal";
 
 export default async function CustomersTable({
   customers,
@@ -96,6 +97,8 @@ export default async function CustomersTable({
                     <tr key={customer.id} className="group">
                       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
                         <div className="flex items-center gap-3">
+                          {/* 즐겨찾기 */}
+                          <Favorite id={customer.id} />
                           <Image
                             src={customer.image_url}
                             className="rounded-full"
@@ -106,11 +109,10 @@ export default async function CustomersTable({
                           <Link
                             href={`/dashboard/customers/${customer.id}/edit`}
                           >
-                            <p>
-                              <strong>{customer.name}</strong>
-                            </p>
+                            <strong>{customer.name}</strong>
                           </Link>
-                          <Favorite id={customer.id} />
+                          {/* 팝업 */}
+                          <Modal id={customer.id} />
                         </div>
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">

@@ -1,32 +1,35 @@
-import Pagination from '@/app/ui/invoices/pagination';
-import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
+import Pagination from "@/app/ui/invoices/pagination";
+import Table from "@/app/ui/invoices/table";
+import Search from "@/app/ui/search";
 
-import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
-import { Suspense } from 'react';
-import { fetchInvoicesPages } from '@/app/lib/data';
+import { fetchInvoicesPages } from "@/app/lib/data";
+import { lusitana } from "@/app/ui/fonts";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { Suspense } from "react";
 
 export default async function Page({
-    searchParams,
-  }: {
-    searchParams?: {
-      query?: string;
-      page?: string;
-    };
-  }) {
-    const query = searchParams?.query || '';
-    const currentPage = Number(searchParams?.page) || 1;
-    
-    const totalPages = await fetchInvoicesPages(query);
-    
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const totalPages = await fetchInvoicesPages(query);
 
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
         <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
       </div>
-      <Search placeholder="Search invoices..." totalPages={Math.ceil(Number(totalPages) / 10)} page="invoice"/>
+      <Search
+        placeholder="Search invoices..."
+        totalPages={Math.ceil(Number(totalPages) / 10)}
+        page="invoice"
+      />
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>

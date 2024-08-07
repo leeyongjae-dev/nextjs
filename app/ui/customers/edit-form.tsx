@@ -5,8 +5,8 @@ import { CustomerForm } from "@/app/lib/definitions";
 import { Button } from "@/app/ui/button";
 import { DeleteCustomer } from "@/app/ui/customers/buttons";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
@@ -23,6 +23,8 @@ export default function EditCustomerForm({
 }) {
   const updateCustomerWithId = updateCustomer.bind(null, customer.id);
   const [editorData, setEditorData] = useState("");
+
+  const router = useRouter();
 
   const imgUrl = [
     {
@@ -143,12 +145,15 @@ export default function EditCustomerForm({
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/customers"
+        <a
+          href="#"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          onClick={() => {
+            router.back();
+          }}
         >
           Cancel
-        </Link>
+        </a>
         <DeleteCustomer id={customer.id} />
         <Button type="submit">Edit Customer</Button>
       </div>

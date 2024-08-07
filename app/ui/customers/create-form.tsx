@@ -1,38 +1,39 @@
-import Link from 'next/link';
-import {
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import { Button } from '@/app/ui/button';
-import { createCustomer } from '@/app/lib/actions';
+"use client";
+
+import { createCustomer } from "@/app/lib/actions";
+import { Button } from "@/app/ui/button";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export default function Form() {
+  const router = useRouter();
 
   const imgUrl = [
     {
-        code : "URL001"
-      , url : "/customers/balazs-orban.png"
-    } ,
-    { 
-        code : "URL002"
-      , url : "/customers/amy-burns.png"
-    } ,
-    { 
-        code : "URL003"
-      , url : "/customers/michael-novotny.png"
-    } ,
-    { 
-        code : "URL004"
-      , url : "/customers/lee-robinson.png"
-    } ,
-    { 
-        code : "URL005"
-      , url : "/customers/evil-rabbit.png"
-    } ,
-    { 
-        code : "URL006"
-      , url : "/customers/delba-de-oliveira.png"
-    }
-  ]
+      code: "URL001",
+      url: "/customers/balazs-orban.png",
+    },
+    {
+      code: "URL002",
+      url: "/customers/amy-burns.png",
+    },
+    {
+      code: "URL003",
+      url: "/customers/michael-novotny.png",
+    },
+    {
+      code: "URL004",
+      url: "/customers/lee-robinson.png",
+    },
+    {
+      code: "URL005",
+      url: "/customers/evil-rabbit.png",
+    },
+    {
+      code: "URL006",
+      url: "/customers/delba-de-oliveira.png",
+    },
+  ];
 
   return (
     <form action={createCustomer}>
@@ -105,12 +106,15 @@ export default function Form() {
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/customers"
+        <a
+          href="#"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          onClick={() => {
+            router.back();
+          }}
         >
           Cancel
-        </Link>
+        </a>
         <Button type="submit">Create Customer</Button>
       </div>
     </form>

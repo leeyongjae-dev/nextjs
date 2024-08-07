@@ -135,12 +135,9 @@ export async function updateCustomer(id: string, formData: FormData) {
 
 /* customer 삭제 */
 export async function deleteCustomer(id: string) {
-  console.log(" >>> ", id);
-
   try {
     await sql`DELETE FROM customers WHERE id = ${id}`;
   } catch (error) {
-    console.log(error);
     return {
       message: "Database Error: Failed to Delete Customer.",
     };

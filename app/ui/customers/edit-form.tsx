@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { CustomerForm } from '@/app/lib/definitions';
-import {
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { Button } from '@/app/ui/button';
-import { UpdateCustomer } from './buttons';
-import { updateCustomer } from '@/app/lib/actions';
+import { updateCustomer } from "@/app/lib/actions";
+import { CustomerForm } from "@/app/lib/definitions";
+import { Button } from "@/app/ui/button";
+import { DeleteCustomer } from "@/app/ui/customers/buttons";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
-import dynamic from 'next/dynamic';
+import { useState } from "react";
+
+import dynamic from "next/dynamic";
 
 // CKEditor를 클라이언트 사이드에서만 로드하도록 설정
-const CKEditorComponent = dynamic(() => import('components/ckeditor'), { ssr: false });
+const CKEditorComponent = dynamic(() => import("components/ckeditor"), {
+  ssr: false,
+});
 
 export default function EditCustomerForm({
   customer,
@@ -21,37 +22,37 @@ export default function EditCustomerForm({
   customer: CustomerForm;
 }) {
   const updateCustomerWithId = updateCustomer.bind(null, customer.id);
-  const [editorData, setEditorData] = useState('<p>Initial content</p>');
+  const [editorData, setEditorData] = useState("");
 
   const imgUrl = [
     {
-        code : "URL001"
-      , url : "/customers/balazs-orban.png"
-    } ,
-    { 
-        code : "URL002"
-      , url : "/customers/amy-burns.png"
-    } ,
-    { 
-        code : "URL003"
-      , url : "/customers/michael-novotny.png"
-    } ,
-    { 
-        code : "URL004"
-      , url : "/customers/lee-robinson.png"
-    } ,
-    { 
-        code : "URL005"
-      , url : "/customers/evil-rabbit.png"
-    } ,
-    { 
-        code : "URL006"
-      , url : "/customers/delba-de-oliveira.png"
-    }
-  ]
+      code: "URL001",
+      url: "/customers/balazs-orban.png",
+    },
+    {
+      code: "URL002",
+      url: "/customers/amy-burns.png",
+    },
+    {
+      code: "URL003",
+      url: "/customers/michael-novotny.png",
+    },
+    {
+      code: "URL004",
+      url: "/customers/lee-robinson.png",
+    },
+    {
+      code: "URL005",
+      url: "/customers/evil-rabbit.png",
+    },
+    {
+      code: "URL006",
+      url: "/customers/delba-de-oliveira.png",
+    },
+  ];
 
   return (
-    <form action={ updateCustomerWithId }>
+    <form action={updateCustomerWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -126,13 +127,20 @@ export default function EditCustomerForm({
 
         {/* Editor */}
         <div className="mb-4">
-          <CKEditorComponent editorData={editorData} setEditorData={setEditorData} />
+          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
+            Introduce Yourself
+          </label>
+          <div className="relative">
+            <CKEditorComponent
+              editorData={editorData}
+              setEditorData={setEditorData}
+            />
+          </div>
         </div>
         {/* Editor Content */}
         <div className="mb-4">
           <div dangerouslySetInnerHTML={{ __html: editorData }} />
         </div>
-        
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
@@ -141,6 +149,7 @@ export default function EditCustomerForm({
         >
           Cancel
         </Link>
+        <DeleteCustomer id={customer.id} />
         <Button type="submit">Edit Customer</Button>
       </div>
     </form>

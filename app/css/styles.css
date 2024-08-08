@@ -1,0 +1,14 @@
+/* styles.css */
+@keyframes fadeBlink {
+  0%,
+  100% {
+    opacity: 1; /* 이미지가 완전히 보이는 상태 */
+  }
+  50% {
+    opacity: 0; /* 이미지가 완전히 사라지는 상태 */
+  }
+}
+
+.blinking-image {
+  animation: fadeBlink 3s infinite; /* 3초 주기로 애니메이션 반복 */
+}

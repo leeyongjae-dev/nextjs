@@ -83,6 +83,7 @@ const FormCusSchema = z.object({
   name: z.string(),
   email: z.string(),
   imageurl: z.string(),
+  intro: z.string(),
 });
 
 const CreateCustomer = FormCusSchema.omit({ id: true });
@@ -112,16 +113,17 @@ export async function createCustomer(formData: FormData) {
 
 /* customer 수정 */
 export async function updateCustomer(id: string, formData: FormData) {
-  const { name, email, imageurl } = UpdateCustomer.parse({
+  const { name, email, imageurl, intro } = UpdateCustomer.parse({
     name: formData.get("name"),
     email: formData.get("email"),
     imageurl: formData.get("imageurl"),
+    intro: formData.get("intro"),
   });
 
   try {
     await sql`
       UPDATE customers
-      SET  name = ${name}, email = ${email}, image_url = ${imageurl}
+      SET  name = ${name}, email = ${email}, image_url = ${imageurl}, intro = ${intro}
       WHERE id = ${id}
     `;
   } catch (error) {

@@ -22,8 +22,7 @@ export default function EditCustomerForm({
   customer: CustomerForm;
 }) {
   const updateCustomerWithId = updateCustomer.bind(null, customer.id);
-  const [editorData, setEditorData] = useState("");
-
+  const [editorData, setEditorData] = useState(customer.intro);
   const router = useRouter();
 
   const imgUrl = [
@@ -56,6 +55,16 @@ export default function EditCustomerForm({
   return (
     <form action={updateCustomerWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
+        {/* Reg date */}
+        <div className="mb-4">
+          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
+            Reg Date
+          </label>
+          <div className="relative">
+            <div className="relative">{customer.reg_date}</div>
+          </div>
+        </div>
+
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
@@ -134,14 +143,12 @@ export default function EditCustomerForm({
           </label>
           <div className="relative">
             <CKEditorComponent
+              id="introduce"
               editorData={editorData}
               setEditorData={setEditorData}
             />
+            <input type="hidden" id="intro" name="intro" value={editorData} />
           </div>
-        </div>
-        {/* Editor Content */}
-        <div className="mb-4">
-          <div dangerouslySetInnerHTML={{ __html: editorData }} />
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">

@@ -1,16 +1,14 @@
 "use client";
 
+import { generateBlockPagination } from "@/app/lib/utils";
 import {
   ArrowLeftIcon,
-  ArrowRightIcon,
-  ArrowLongLeftIcon,
-  ArrowLongRightIcon,
   ArrowLeftStartOnRectangleIcon,
+  ArrowRightIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
-import { generateBlockPagination } from "@/app/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 
 export default function Pagination({
@@ -30,7 +28,10 @@ export default function Pagination({
   const pagePerItem = [1, 10, 20, 50].includes(Number(params.get("per")))
     ? Number(params.get("per"))
     : 10;
-  const totalPages = Math.ceil(Number(totalPageCount) / pagePerItem);
+  const totalPages =
+    Math.ceil(Number(totalPageCount) / pagePerItem) === 0
+      ? 1
+      : Math.ceil(Number(totalPageCount) / pagePerItem);
 
   const createPageURL = (pageNumber: number | string) => {
     params.set("page", pageNumber.toString());

@@ -5,7 +5,15 @@ import { useState } from "react";
 
 import Modal from "components/modal";
 
-export default function favorite({ id }: { id: string }) {
+import "@/app/css/styles.css";
+
+export default function favorite({
+  id,
+  content,
+}: {
+  id: string;
+  content: string;
+}) {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -18,18 +26,31 @@ export default function favorite({ id }: { id: string }) {
 
   return (
     <>
-      <Image
-        src="/free-icon-pop-up.png"
-        className="rounded-full"
-        alt={`${id}'s`}
-        width={28}
-        height={28}
-        onClick={() => handleOpenModal()}
-        style={{ cursor: "pointer" }}
-      />
-      <Modal show={showModal} onClose={() => handleCloseModal()}>
-        <p>{id}</p>
-      </Modal>
+      {content ? (
+        <>
+          <Image
+            src="/free-icon-pop-up.png"
+            alt={`${id}'s`}
+            width={25}
+            height={25}
+            onClick={() => handleOpenModal()}
+            style={{ cursor: "pointer" }}
+            className={content ? "blinking-image" : ""}
+          />
+          <Modal
+            title="상세내용"
+            show={showModal}
+            onClose={() => handleCloseModal()}
+          >
+            <div
+              dangerouslySetInnerHTML={{ __html: content }}
+              style={{ maxHeight: "350px", overflow: "auto" }}
+            />
+          </Modal>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }

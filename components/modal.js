@@ -1,6 +1,6 @@
 import styles from "./modal.module.css";
 
-const Modal = ({ show, onClose, children }) => {
+const Modal = ({ title, show, onClose, children }) => {
   if (!show) {
     return null;
   }
@@ -8,10 +8,14 @@ const Modal = ({ show, onClose, children }) => {
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
-        <button className={styles.closeButton} onClick={onClose}>
-          &times;
-        </button>
-        {children}
+        <div style={{ paddingBottom: "5px" }}>
+          <h1>{title}</h1>
+          <hr />
+          <button className={styles.closeButton} onClick={onClose}>
+            &times;
+          </button>
+        </div>
+        <div>{children}</div>
       </div>
     </div>
   );

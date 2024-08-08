@@ -1,11 +1,11 @@
 // components/CKEditor.js
-import React from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 
-const CKEditorComponent = ({ editorData, setEditorData }) => {
+const CKEditorComponent = ({ id, editorData, setEditorData }) => {
   return (
     <CKEditor
+      id={id}
       editor={ClassicEditor}
       data={editorData}
       onChange={(event, editor) => {

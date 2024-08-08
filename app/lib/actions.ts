@@ -86,7 +86,14 @@ const FormCusSchema = z.object({
   intro: z.string(),
 });
 
-const CreateCustomer = FormCusSchema.omit({ id: true });
+const FormCusSchemaCreate = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  imageurl: z.string(),
+});
+
+const CreateCustomer = FormCusSchemaCreate.omit({ id: true });
 const UpdateCustomer = FormCusSchema.omit({ id: true });
 
 /* customer 등록 */
@@ -97,10 +104,12 @@ export async function createCustomer(formData: FormData) {
     imageurl: formData.get("imageurl"),
   });
 
+  const date = new Date().toISOString().split("T")[0];
+
   try {
     await sql`
-      INSERT INTO customers (name, email, image_url)
-      VALUES (${name}, ${email}, ${imageurl})
+      INSERT INTO customers (name, email, image_url, reg_date)
+      VALUES (${name}, ${email}, ${imageurl}, ${date})
     `;
   } catch (error) {
     return {

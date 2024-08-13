@@ -274,3 +274,16 @@ export async function fetchCustomerById(id: string) {
     throw new Error("Failed to fetch customer.");
   }
 }
+
+export async function fetchBoard(text: string) {
+  const res = await fetch(
+    `http://localhost:8080/api/board/list?searchText=${text}`
+  );
+  const boardList = await res.json();
+
+  return {
+    props: {
+      boardList,
+    },
+  };
+}

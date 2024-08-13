@@ -101,3 +101,13 @@ export type CustomerForm = {
   reg_date: string;
   intro: string;
 };
+
+export type FormattedBoardTable = {
+  board_no: number;
+  title: string;
+  cont: string;
+  writer_nm: string;
+  view_cnt: number;
+  reg_dt: string;
+  mod_dt: string;
+};
